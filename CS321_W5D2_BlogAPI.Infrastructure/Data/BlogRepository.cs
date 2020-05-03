@@ -14,6 +14,7 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
         public BlogRepository(AppDbContext dbContext) 
         {
             // TODO: inject AppDbContext
+            _dbContext = dbContext;
         }
 
         public IEnumerable<Blog> GetAll()
