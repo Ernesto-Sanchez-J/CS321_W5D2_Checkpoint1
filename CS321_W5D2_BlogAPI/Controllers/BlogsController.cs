@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CS321_W5D2_BlogAPI.Controllers
 {
     [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
     public class BlogsController : Controller
     {
@@ -21,6 +22,7 @@ namespace CS321_W5D2_BlogAPI.Controllers
         // TODO: inject BlogService
         public BlogsController()
         {
+            _blogService = BlogService;
         }
 
         // GET: api/blogs
@@ -32,15 +34,10 @@ namespace CS321_W5D2_BlogAPI.Controllers
             {
                 // TODO: replace the code below with the correct implementation
                 // to return all blogs
-                return Ok(new BlogModel[] {
-                    new BlogModel
-                    {
-                        Id = 1,
-                        Name = "Fix Me!",
-                        Description = "Implement GET /api/blogs",
-                        AuthorName = "unknown",
-                    }
-                });
+                var allblogs = _blogService
+                    .GetAll()
+                    .ToApiModels();
+                return Ok(allblogs);
             }
             catch (Exception ex)
             {
@@ -58,13 +55,12 @@ namespace CS321_W5D2_BlogAPI.Controllers
             {
                 // TODO: replace the code below with the correct implementation
                 // to return a blog by id
-                return Ok(new BlogModel
-                {
-                    Id = id,
-                    Name = "Fix Me!",
-                    Description = "Implement GET /api/blogs/{id}",
-                    AuthorName = "unknown",
-                });
+                var blog = _blogService.Get(id);
+
+                if (blog == null) return NotFound();
+
+                return Ok(blog.ToApiModel());
+               
             }
             catch (Exception ex)
             {
