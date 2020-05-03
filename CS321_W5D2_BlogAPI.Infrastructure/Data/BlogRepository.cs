@@ -68,8 +68,6 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
                 _dbContext.Blogs.Remove(delBlog);
                 _dbContext.SaveChanges();
             }
-
-           
         }
     }
 }
