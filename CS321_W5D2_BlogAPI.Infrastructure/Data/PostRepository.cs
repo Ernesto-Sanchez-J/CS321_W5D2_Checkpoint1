@@ -9,6 +9,7 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
 {
     public class PostRepository : IPostRepository
     {
+        private AppDbContext _dbContext;
         public PostRepository(AppDbContext dbContext) 
         {  
             _dbContext = dbContext;
@@ -16,7 +17,6 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
 
         public Post Get(int id)
         {
-            // TODO: Implement Get(id). Include related Blog and Blog.User
             return _dbContext.Posts
                 .Include(p => p.Blog)
                 .Include(p => p.Blog.User)
@@ -25,8 +25,6 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
 
         public IEnumerable<Post> GetBlogPosts(int blogId)
         {
-            // TODO: Implement GetBlogPosts, return all posts for given blog id
-            // TODO: Include related Blog and AppUser
             return _dbContext.Posts
                 .Include(p => p.Blog)
                 .Include(p => p.Blog.User)
@@ -34,24 +32,22 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
                 .ToList();
         }
 
-        public Post Add(Post Post)
+        public Post Add(Post post)
         {
-            // TODO: add Post
             _dbContext.Add(post);
-            _dbContexr.SaveChanges();
+            _dbContext.SaveChanges();
             return post;
         }
 
-        public Post Update(Post Post)
+        public Post Update(Post updatedpost)
         {
-            // TODO: update Post
-             var currentPost = _dbContext.Posts.Find(updatedPost.Id);
+             var currentPost = _dbContext.Posts.Find(updatedpost.Id);
 
             if (currentPost == null) return null;
 
             _dbContext.Entry(currentPost)
                 .CurrentValues
-                .SetValues(updatedPost);
+                .SetValues(updatedpost);
 
             _dbContext.Posts.Update(currentPost);
             _dbContext.SaveChanges();
@@ -60,7 +56,6 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
 
         public IEnumerable<Post> GetAll()
         {
-            // TODO: get all posts
             return _dbContext.Posts
                 .ToList();
         }
@@ -74,6 +69,7 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
             {
                 _dbContext.Posts.Remove(delPost);
                 _dbContext.SaveChanges();
+            }
         }
 
     }

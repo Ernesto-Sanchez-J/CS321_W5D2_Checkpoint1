@@ -42,7 +42,7 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
 
         }
 
-        public Blog Update(Blog updatedItem)
+        public Blog Update(Blog updatedBlog)
         {
             // TODO: update blog
             var currentBlog = _dbContext.Blogs.Find(updatedBlog.Id);
@@ -61,7 +61,6 @@ namespace CS321_W5D2_BlogAPI.Infrastructure.Data
 
         public void Remove(int id)
         {
-            // TODO: remove blog
             var delBlog = _dbContext.Blogs.Find(id);
             if(delBlog != null)
             {

@@ -17,12 +17,11 @@ namespace CS321_W5D2_BlogAPI.Controllers
     [Route("api/[controller]")]
     public class BlogsController : Controller
     {
-        private readonly IBlogService _blogService;
+        private IBlogService _blogService;
 
-        // TODO: inject BlogService
-        public BlogsController()
+        public BlogsController(IBlogService blogService)
         {
-            _blogService = BlogService;
+            _blogService = blogService;
         }
 
         // GET: api/blogs
